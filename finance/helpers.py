@@ -7,13 +7,9 @@ from functools import wraps
 
 
 def apology(message, code=400):
-    """Render message as an apology to user."""
+    #Render message as an apology to user.
     def escape(s):
-        """
-        Escape special characters.
-
-        https://github.com/jacebrowning/memegen#special-characters
-        """
+        #Escape special characters : https://github.com/jacebrowning/memegen#special-characters
         for old, new in [("-", "--"), (" ", "-"), ("_", "__"), ("?", "~q"),
                          ("%", "~p"), ("#", "~h"), ("/", "~s"), ("\"", "''")]:
             s = s.replace(old, new)
@@ -22,11 +18,7 @@ def apology(message, code=400):
 
 
 def login_required(f):
-    """
-    Decorate routes to require login.
-
-    https://flask.palletsprojects.com/en/1.1.x/patterns/viewdecorators/
-    """
+    #Decorate routes to require login : https://flask.palletsprojects.com/en/1.1.x/patterns/viewdecorators/
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if session.get("user_id") is None:
@@ -36,7 +28,7 @@ def login_required(f):
 
 
 def lookup(symbol):
-    """Look up quote for symbol."""
+    #Look up quote for symbol.
 
     # Contact API
     try:
@@ -60,5 +52,5 @@ def lookup(symbol):
 
 
 def usd(value):
-    """Format value as USD."""
+    #Format value as USD.
     return f"${value:,.2f}"
