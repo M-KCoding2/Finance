@@ -34,7 +34,7 @@ if not os.environ.get("API_KEY"):
 
 @app.after_request
 def after_request(response):
-    """Ensure responses aren't cached"""
+    #Ensure responses aren't cached
     response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
     response.headers["Expires"] = 0
     response.headers["Pragma"] = "no-cache"
@@ -44,7 +44,7 @@ def after_request(response):
 @app.route("/")
 @login_required
 def index():
-    """Show portfolio of stocks"""
+    #Show portfolio of stocks
     user_id = session["user_id"]
     payments = db.execute("SELECT DISTINCT Symbol AS Symbol,Name AS Name FROM payments WHERE user_id = ?", user_id)
     # Need to select Shares and Total seperately
@@ -96,7 +96,7 @@ def index():
 @app.route("/buy", methods=["GET", "POST"])
 @login_required
 def buy():
-    """Buy shares of stock"""
+    #Buy shares of stock
     if request.method == "POST":
 
         # Gets symbol and ckecks with requirements
@@ -141,7 +141,7 @@ def buy():
 @app.route("/history")
 @login_required
 def history():
-    """Show history of transactions"""
+    #Show history of transactions
     user_id = session["user_id"]
     history = db.execute("SELECT Symbol, Shares, Price, Date FROM payments WHERE user_id = ?", user_id)
     return render_template("history.html", history=history)
@@ -149,7 +149,7 @@ def history():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    """Log user in"""
+    #Log user in
 
     # Forget any user_id
     session.clear()
@@ -185,7 +185,7 @@ def login():
 
 @app.route("/logout")
 def logout():
-    """Log user out"""
+    #Log user out
 
     # Forget any user_id
     session.clear()
@@ -197,7 +197,7 @@ def logout():
 @app.route("/quote", methods=["GET", "POST"])
 @login_required
 def quote():
-    """Get stock quote."""
+    #Get stock quote.
     if request.method == "GET":
         return render_template("quote.html")
     elif request.method == "POST":
@@ -212,7 +212,7 @@ def quote():
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
-    """Register user"""
+    #Register user
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
@@ -236,7 +236,7 @@ def register():
 @app.route("/sell", methods=["GET", "POST"])
 @login_required
 def sell():
-    """Sell shares of stock"""
+    #Sell shares of stock
     if request.method == "POST":
         user_id = session["user_id"]
         symbol = request.form.get("symbol")  # implement a select menu
